@@ -13,33 +13,6 @@ library(censusapi)
 library(tidycensus)
 library(tidyverse)
 library(data.table)
-library(plyr)
-```
-
-
-```{r sfdata}
-sfdata <- vroom("COVID-19_Cases_by_Geography_and_Date.csv")
-str(sfdata)
-head(sfdata)
-sfdata <- sfdata[, 1:8]
-unique(sfdata$area_type)
-sfdata$area_type <- sfdata$area_type[, area_type == "ZCTA"]
-unique(sfdata$`Specimen Collection Date`)
-
-newdata <- sfdata[which(sfdata$area_type=="ZCTA" & sfdata$`Specimen Collection Date`=="2020-12-03"),]
-head(newdata)
-finaldata <- newdata[, c("id", "acs_population", "Cumulative Confirmed Cases", "Rate of Cumulative Confirmed Case")]
-write.csv(finaldata, file = "C:/Users/Blum/Desktop/sfdata.csv")
-as.data.frame(finaldata)
-```
-
-```{r census key}
-# Add key to .Renviron
-census_api_key("5e8cf3dd21e78fa611d78909ac557c6580b30546", overwrite = TRUE, install = TRUE)
-# Reload .Renviron
-readRenviron("~/.Renviron")
-# Check to see that the expected key is output in your R console
-Sys.getenv("CENSUS_KEY")
 ```
 
 ```{r acs}
